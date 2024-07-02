@@ -22,6 +22,7 @@ let board = [
 let turn = 'X';
 let winner = false;
 let tie = false;
+let gameWon = false;
 
 
 /*------------------------ Cached Element References ------------------------*/
@@ -31,14 +32,15 @@ const squareEls = document.querySelectorAll('.sqr');
 console.log(squareEls);
 //Game status
 const messageEl = document.querySelector('#message');
+//Reset button
+const reset = document.querySelector('.reset');
 
 
 /*-------------------------------- Functions --------------------------------*/
 
 
 const render = () => {
-    messageEl.textContent = "----:)-----"
-    init();
+    messageEl.textContent = "----:)-----";
 }
 
 
@@ -49,6 +51,17 @@ const init = () => {
         spot.textContent = '';
     }
   })
+    messageEl.textContent = "----:)-----"
+    board = [];
+    playerChoice = undefined;
+    board = [
+    '','','',
+    '','','',
+    '','',''
+    ];
+    turn = 'X';
+    winner = false;
+    tie = false;
 }
 
 const setPlayerChoice = (event) => {
@@ -57,7 +70,12 @@ const setPlayerChoice = (event) => {
     if (board[index] !== '') {
         return; 
     }
-    board[index] = playerChoice;
+    if (!gameWon) {
+        board[index] = playerChoice;
+    }
+    else {
+        return;
+    }
 
     board.forEach((element, index)=>{
         squareEls[index].innerHTML = element;
@@ -66,7 +84,6 @@ const setPlayerChoice = (event) => {
 };
     
 const winningPlayer = () => {
-    let gameWon = false;
 
     for (let combo of winningOptions) {
         let count = 0;
@@ -102,3 +119,5 @@ render();
 squareEls.forEach (selectedSpot => {
     selectedSpot.addEventListener('click', setPlayerChoice);
 })
+
+reset.addEventListener('click',init);

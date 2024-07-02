@@ -19,3 +19,9 @@ body {
     font-size: 64px;
     text-align: center;
   }
+
+  .reset {
+    display: flex;
+    margin: auto;
+    margin-top: 2rem;
+  }
